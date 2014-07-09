@@ -1,5 +1,5 @@
 {
-    "name": "dbrisinajumi/Yeeki",
+    "name": "dbrisinajumi/yeeki",
     "description": "Yeeki is a flexible wiki engine that can be used either as a standalone application or as an Yii framework module",
     "keywords": ["yii","yii"],
     "type": "yii-extension",
