@@ -1,6 +1,35 @@
 <?php
 class DefaultController extends Controller
 {
+    
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+    
+    public function accessRules()
+    {
+        return array(
+            array('deny', // deny quests
+                'users'=>array('?'),
+            ),
+            array(
+                'allow', // allow full control to WikiEditor
+                'actions' => array('index', 'view', 'edit', 'history', 'diff', 'pageIndex'),
+                'roles' => array('WikiEditor'),
+            ),
+            array('allow', // allow view to any user
+                'actions'=>array('index', 'view', 'pageIndex'),
+                'users'=>array('*'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+    
 	/**
 	 * By default wiki displays page with unique id = 'index'
 	 */
