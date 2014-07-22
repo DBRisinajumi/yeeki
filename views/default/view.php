@@ -1,3 +1,10 @@
+<?php
+if ($this->action->id == 'viewPopup') {
+?>
+<title><?php echo $page->page_title; ?></title>
+<?php
+}
+?>
 <div>
     <?php
     if (Yii::app()->user->checkAccess("WikiEditor")) { ?>
