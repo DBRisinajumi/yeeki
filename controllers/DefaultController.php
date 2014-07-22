@@ -178,7 +178,7 @@ class DefaultController extends Controller
 			}
 			else
 			{
-				$this->renderPartial('view', array(
+				$this->renderPartial('popup_view', array(
 					'page' => $page,
 					'text' => $text,
 				));

@@ -13,6 +13,8 @@ if ($this->action->id == 'viewPopup') {
 		<?php echo CHtml::link(Yii::t('wiki', 'History'), array('history', 'uid' => $page->getWikiUid()))?>
 	</div>
     <?php } ?>
+    <h3><?php echo $page->page_index . ' ' . $page->page_title?></h3> 
+    [uid:<?php echo $page->page_uid?>] 
 	<div class="wiki-text">
 		<?php echo $text?>
 	</div>

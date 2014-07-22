@@ -56,7 +56,7 @@ class WikiPage extends CActiveRecord
 	{
 		return array(
 			//array('is_redirect', 'numerical', 'integerOnly'=>true),
-			array('content', 'safe'),
+			array('content,page_index,page_title', 'safe'),
 		);
 	}
 
