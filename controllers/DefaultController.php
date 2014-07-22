@@ -17,11 +17,11 @@ class DefaultController extends Controller
             ),
             array(
                 'allow', // allow full control to WikiEditor
-                'actions' => array('index', 'view', 'edit', 'history', 'diff', 'pageIndex'),
+                'actions' => array('index', 'view', 'viewPopup', 'edit', 'history', 'diff', 'pageIndex'),
                 'roles' => array('WikiEditor'),
             ),
             array('allow', // allow view to any user
-                'actions'=>array('index', 'view', 'pageIndex'),
+                'actions'=>array('index', 'view', 'viewPopup', 'pageIndex'),
                 'users'=>array('*'),
             ),
             array('deny',
@@ -110,6 +110,83 @@ class DefaultController extends Controller
 		else
 		{
 			$this->render('no_page',array(
+				'uid' => $uid,
+			));
+		}
+	}
+    
+    /**
+	 * Handles viewing a page in popup
+	 *
+	 * @param string $uid unique id of a page
+	 * @param int $rev revision number, optional
+	 * @throws CHttpException if page wasn't found
+	 */
+	public function actionViewPopup($uid, $rev = null)
+	{
+		$page = WikiPage::model()->findByWikiUid($uid);
+		if($page)
+		{
+			if($rev)
+			{
+				$revision = WikiPageRevision::model()->findByAttributes(array(
+					'page_id' => $page->id,
+					'id' => $rev,
+				));
+
+				if(!$revision)
+				{
+					throw new CHttpException(404);
+				}
+
+				$cacheId = $revision->getCacheKey();
+			}
+			else
+			{
+				$cacheId = $page->getCacheKey();
+			}
+
+			if(!($text = Yii::app()->cache->get($cacheId)))
+			{
+				if($rev)
+				{
+					$text = $revision->content;
+				}
+				else
+				{
+					$text = $page->content;
+				}
+
+				/** @var $markupProcessors AbstractMarkup[] */
+				$markupProcessors = $this->getModule()->getMarkupProcessors();
+				foreach($markupProcessors as $markupProcessor)
+				{
+					$text = $markupProcessor->process($text);
+				}
+
+				$text = $this->replaceWikiLinks($text);
+
+				Yii::app()->cache->set($cacheId, $text);
+			}
+
+			$text = trim($text);
+			if(empty($text))
+			{
+				$this->renderPartial('no_page',array(
+					'uid' => $uid,
+				));
+			}
+			else
+			{
+				$this->renderPartial('view', array(
+					'page' => $page,
+					'text' => $text,
+				));
+			}
+		}
+		else
+		{
+			$this->renderPartial('no_page',array(
 				'uid' => $uid,
 			));
 		}
