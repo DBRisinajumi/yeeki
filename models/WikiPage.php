@@ -79,6 +79,8 @@ class WikiPage extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'is_redirect' => 'Is Redirect',
+            'page_index' => 'Title Index',
+            'page_title' => 'Title',
 			'wiki_uid' => 'PageID',
 			'namespace' => 'Namespace',
 			'content' => 'Content',
