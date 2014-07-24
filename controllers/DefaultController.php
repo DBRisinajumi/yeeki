@@ -12,7 +12,7 @@ class DefaultController extends Controller
     public function accessRules()
     {
         return array(
-            array('deny', // deny quests
+            array('deny', // deny guests
                 'users'=>array('?'),
             ),
             array(
