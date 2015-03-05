@@ -9,7 +9,7 @@ class m140721_184401_add_authitem extends CDbMigration
 	public function up()
 	{
 		$this->execute("
-            INSERT INTO `authitem` VALUES('WikiEditor', 2, 'Edit wiki help pages', NULL, 'N;');
+            INSERT INTO `AuthItem` VALUES('WikiEditor', 2, 'Edit wiki help pages', NULL, 'N;');
         ");
 	}
 
@@ -19,7 +19,7 @@ class m140721_184401_add_authitem extends CDbMigration
 	public function down()
 	{
 		$this->execute("
-            DELETE FROM `authitem` WHERE `name` = 'WikiEditor';
+            DELETE FROM `AuthItem` WHERE `name` = 'WikiEditor';
         ");
 	}
 
