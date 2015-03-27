@@ -181,6 +181,7 @@ class DefaultController extends Controller
 				$this->renderPartial('popup_view', array(
 					'page' => $page,
 					'text' => $text,
+                    'uid' => $uid,
 				));
 			}
 		}
